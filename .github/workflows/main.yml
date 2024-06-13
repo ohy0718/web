@@ -33,7 +33,9 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWD }}
         port: ${{ secrets.SERVER_PORT }}
-        source: "./build/libs/*"
-        target: "/home/ohy/workspace/web/build/libs"
+        # source: "./build/libs/*"
+        # target: "/home/ohy/workspace/web/build/libs"
         script: |
+          sudo cd /home/ohy/workspace/web/build/libs
+          sudo git pull https://github.com/ohy0718/web/build/libs/
           sudo systemctl restart spring_web
