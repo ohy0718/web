@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: upload_jar
-        path: build/libs/web-0.0.1-SNAPSHOT.jar
+        path: build/libs/*.jar
         
   deploy:
     needs: build
