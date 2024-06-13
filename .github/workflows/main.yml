@@ -26,6 +26,25 @@ jobs:
       with:
         arguments: build
         
+    - name: Upload artifact
+      # 빌드 산출물(jar 파일)을 cicdsample이라는 이름으로 업로드한다.
+      uses: actions/upload-artifact@v2
+      with:
+        name: webServer
+        path: build/libs/*.jar      
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    # 업로드했던 cicdsample artifact를 다운로드한다.
+    - name: Download artifact    
+      uses: actions/download-artifact@v2
+      with:
+          name: webServer
+          
     - name: SCP Transfer
       run: |
          scp *.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}~/workspace/web/build/libs
