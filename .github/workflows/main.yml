@@ -36,6 +36,6 @@ jobs:
         # source: "./build/libs/*"
         # target: "/home/ohy/workspace/web/build/libs"
         script: |
-          sudo cd /home/ohy/workspace/web/build/libs
-          sudo git pull https://github.com/ohy0718/web/build/libs/
+          cd /home/ohy/workspace/web/build/libs
+          git pull https://github.com/ohy0718/web/build/libs/
           sudo systemctl restart spring_web
