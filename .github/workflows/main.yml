@@ -36,4 +36,4 @@ jobs:
         source: "./build/libs/*"
         target: "/home/ohy/workspace/web/build/libs"
         script: |
-          systemctl restart spring_web
+          sudo systemctl restart spring_web
