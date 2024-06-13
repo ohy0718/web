@@ -62,5 +62,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            scp *.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:~/workspace/web/build/libs
+            sudo scp *.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:~/workspace/web/build/libs
             sudo systemctl restart spring_web
