@@ -11,67 +11,67 @@ on:
   push:
     branches: [ "main" ]
 
-# jobs:
-#   deploy:
-  
-#     runs-on: self-hosted
-    
-#     steps:
-#       - name: deploy
-#         run: |
-#           chmod +x /home/ohy/actions-runner/deploy.sh
-#           sudo /home/ohy/actions-runner/deploy.sh
-
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        
-    # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
-    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-    
-    - name: Build with Gradle
-      id: gradle-build
-      run: |
-        chmod +x gradlew
-        ./gradlew build
-
-    - name: Upload Build File
-      uses: actions/upload-artifact@v4
-      with:
-        name: upload_jar
-        path: build/libs/*.jar
-        
   deploy:
-    needs: build
+  
+    runs-on: self-hosted
     
-    runs-on: ubuntu-latest
-
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: upload_jar
+      - name: deploy
+        run: |
+          chmod +x /home/ohy/workspace/deploy.sh
+          sudo /home/ohy/workspace/deploy.sh
+
+# jobs:
+#   build:
+
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+
+#     steps:
+#     - uses: actions/checkout@v4
+#     - name: Set up JDK 21
+#       uses: actions/setup-java@v4
+#       with:
+#         java-version: '21'
+#         distribution: 'temurin'
+        
+#     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
+#     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+#     - name: Setup Gradle
+#       uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+    
+#     - name: Build with Gradle
+#       id: gradle-build
+#       run: |
+#         chmod +x gradlew
+#         ./gradlew build
+
+#     - name: Upload Build File
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: upload_jar
+#         path: build/libs/*.jar
+        
+#   deploy:
+#     needs: build
+    
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Download artifact
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: upload_jar
           
-      - name: jar pull and run
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWD }}
-          port: ${{ secrets.SERVER_PORT }}
-          script: |
-            sudo scp *.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:~/workspace/web/build/libs
-            sudo systemctl restart spring_web
+#       - name: jar pull and run
+#         uses: appleboy/ssh-action@v0.1.7
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           password: ${{ secrets.SERVER_PASSWD }}
+#           port: ${{ secrets.SERVER_PORT }}
+#           script: |
+#             sudo scp *.jar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:~/workspace/web/build/libs
+#             sudo systemctl restart spring_web
