@@ -19,5 +19,5 @@ jobs:
     steps:
       - name: deploy
         run: |
-          chmod +x /home/ohy/workspace/web/deploy.sh
-          sudo /home/ohy/workspace/web/deploy.sh
+          chmod +x /home/ohy/workspace/deploy.sh
+          sudo /home/ohy/workspace/deploy.sh
